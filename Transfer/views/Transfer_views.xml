@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_Transfer" model="ir.ui.view">
+            <field name="name">Transfer.order</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="reference" attrs="{'required': [('picking_type_code', '=', 'incoming')],'invisible':
+                        ['|',('picking_type_code', '=', 'internal') ,('picking_type_code', '=', 'outgoing')]}"/>
+                    <field name="narration"/>
+                    <field name="x_narration"/>
+                    <field name="transfer_narration" attrs="{'readonly': [('picking_type_code', '=', 'outgoing')]}"/>
+                    <field name="received_by" attrs="{'required': [('picking_type_code', '=', 'incoming')],'invisible':
+                        ['|',('picking_type_code', '=', 'internal') ,('picking_type_code', '=', 'outgoing')]}"/>
+                    <field name="amount_to_be_paid"/>
+                    <field name="margin" groups="Transfer.group_Accounting"/>
+<!--                    <field name="currency_id"/>-->
+                </field>
+
+                <xpath expr="//header//button[@name='button_validate']" position="attributes">
+                    <attribute name="groups">
+                        Transfer.group_Store_Manager,Transfer.group_Accounting,Transfer.group_Store_Keeper,base.group_system
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//header//button[@name='action_cancel']" position="attributes">
+                    <attribute name="groups">
+                        Transfer.group_Store_Manager,Transfer.group_Accounting,Transfer.group_Logistics,base.group_system
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="deliver_on_vehicle"/>
+                    <field name="slot_allocation_time"/>
+                    <field name="sale_order_type"/>
+                    <field name="journal_id"/>
+                    <field name="code" readonly="0"/>
+                </xpath>
+
+<!--                <field name="picking_type_id" position="attributes">-->
+<!--                    <attribute name="domain">['&amp;',('code', '!=', 'incoming'), ('code', '!=', 'outgoing')]</attribute>-->
+<!--                </field>-->
+
+<!--                 <field name="move_line_ids_without_package" position="attributes">-->
+<!--                    <attribute name="domain">[('code', '!=', 'incoming')]</attribute>-->
+<!--                </field>-->
+
+<!--                 <field name="move_line_ids_without_package" position="attributes">-->
+<!--                    <attribute name="options">{'no_create': True}</attribute>-->
+<!--                </field>-->
+
+                   <xpath expr="//notebook//page[3]//field[@name='move_ids_without_package']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('picking_type_code', '=', 'incoming')]}</attribute>
+                   </xpath>
+
+
+
+
+
+
+
+<!--                <label for="partner_id" string="Contact" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': [('picking_type_code', 'in', ['incoming', 'outgoing'])],-->
+<!--                        ,'required':-->
+<!--                        [('picking_type_code', 'in', ['incoming', 'outgoing'])]}-->
+<!--                    </attribute>-->
+<!--                </label>-->
+                              <xpath expr="//field[@name='partner_id']" position="attributes">
+                               <attribute name="attrs">{'readonly': [('code', 'in', ['incoming', 'outgoing'])], 'required':
+                                      [('code', 'in', ['incoming', 'outgoing'])]}</attribute>
+                            </xpath>
+<!--                             <label for="partner_id" string="Contact" style="font-weight:bold;" attrs="{'invisible': [('picking_type_code', 'in', ['incoming', 'outgoing'])]}" position="replace">-->
+<!--                             <label for="partner_id" string="Contact" style="font-weight:bold;" attrs="{'invisible': [('picking_type_code', 'in', ['incoming', 'outgoing'])], ,'required':-->
+<!--                                        [('picking_type_code', 'in', ['incoming', 'outgoing'])]}"/>-->
+<!--                             </label>-->
+
+            </field>
+        </record>
+    </data>
+</odoo>
