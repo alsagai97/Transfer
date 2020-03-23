@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="Transfer_out_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <center>
+                            <h1 style="font-weight: bold;">TRANSFER OUT</h1>
+                        </center>
+                        <div style="font-size:x-large;float:right;">
+                           <p>Date:<span t-field="o.scheduled_date"/></p>
+                           </div>
+
+                         <div style="font-size:x-large;float:left;">
+                           <p>Voucher No:<span t-field="o.name"/></p>
+                           </div>
+
+                            <div style="font-size:x-large;margin-left:500px">
+                                 <p>Transfer Narration:<span t-field="o.transfer_narration"/></p>
+                            </div>
+                        <div>
+                        <table>
+                            <tr>
+                                <hr style="border: 1px solid black"></hr>
+                                <th style="padding-right:20px">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">S.NO</h5>
+                                </th>
+                                <th style="padding-right:20px">
+                                    <h45 style="font-size:xx-large;font-weight: bold;">Warehouse</h45>
+                                </th>
+                                <th style="padding-right:20px">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">Warehouse-2</h5>
+                                </th>
+                                <th style="padding-right:20px">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">Barcode</h5>
+                                </th>
+                                <th style="padding-right:20px">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">Model</h5>
+                                </th>
+                                <th style="padding-right:100px">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">Particulars</h5>
+                                </th>
+                                <th style="">
+                                    <h5 style="font-size:xx-large;font-weight: bold;">Quantity</h5>
+                                </th>
+                            </tr>
+                            <t t-foreach="o.move_line_ids_without_package" t-as="line">
+
+                                <tr>
+
+                                    <td style="font-size:x-large;">
+                                        <span t-field="line.lot_id"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:5px">
+                                        <span t-field="line.location_id"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:5px">
+                                        <span t-field="line.location_dest_id"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:5px">
+                                        <span t-field="line.product_id.barcode"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:5px">
+                                        <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:10px">
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td style="font-size:x-large;padding-left:5px;text-align:right;">
+                                        <span t-field="line.qty_done"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                            </div>
+                        </div>
+                        <table>
+                            <tr>
+                                <td>
+                                     <span style="margin-left:300px;">_______________________________</span>
+                                </td>
+                                <td>
+                                   <span style="font-size:x-large;margin-left:607px">Total:</span>
+                                </td>
+                                <td style="font-size:x-large;">
+                                    <span t-esc="'%.3f'%sum(o.move_line_ids_without_package.mapped('qty_done'))"/>
+                                </td>
+                            </tr>
+                        </table>
+                            <hr style="border: 1px solid black;"></hr>
+                            <div style="font-size:x-large;float:left;font-weight: bold;">
+                            <p>Delivered By:_________________________________________</p>
+                            <p>Received By:__________________________________________</p>
+                            <p>We received the above transactions as our order and condition</p>
+                            </div>
+
+                        <div style="font-size:x-large;float:right;font-weight:bold;">
+                            <p>Store Keeper:_________________________________________</p>
+                            <p>Sales Man:_____________________________________________</p>
+                        </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

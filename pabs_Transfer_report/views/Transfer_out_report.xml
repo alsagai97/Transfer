@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <report
+            id="Transfer_Out"
+            model="stock.picking"
+            string="Transfer Out"
+            report_type="qweb-pdf"
+            name="pabs_Transfer_report.Transfer_out_report_template"
+            file="pabs_Transfer_report.Transfer_out_report_template"
+            paperformat="pabs_Transfer_report.paperformat_Transfer_out"
+    />
+</odoo>
